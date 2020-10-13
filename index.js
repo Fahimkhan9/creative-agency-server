@@ -55,7 +55,7 @@ app.get('/', (req, res) => {
 
 
 
-const uri = "mongodb+srv://fahimalif:fahimkhan@cluster0.vigvf.mongodb.net/creativeagency?retryWrites=true&w=majority";
+
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   const orderscollection = client.db("creativeagency").collection("orders");

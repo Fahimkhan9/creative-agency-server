@@ -59,6 +59,8 @@ client.connect((err) => {
   const orderscollection = client.db("creativeagency").collection("orders");
   const reviewcollection = client.db("creativeagency").collection("reviews");
   const servicescollection = client.db("creativeagency").collection("services");
+  const admincollection = client.db("creativeagency").collection("admin");
+
 
   app.post("/addorder", (req, res) => {
     const orderinfo = req.body;
@@ -139,6 +141,17 @@ client.connect((err) => {
       res.send(documents);
     });
   });
+
+app.post('/isdoctor',(req,res) => {
+  const email = req.body.email
+admincollection.find({email: email})
+.toArray((err,documents) => {
+  res.send(documents.length > 0)
+  console.log(documents.length > 0);
+})
+})
+
+
 
   console.log("db connected");
 });

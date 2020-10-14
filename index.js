@@ -98,6 +98,15 @@ app.post("/addreview",(req,res) => {
     })
 })
 
+
+app.get("/getallservice",(req,res) => {
+  orderscollection.find({})
+  .toArray((err,documents) => {
+    res.send(documents)
+  })
+})
+
+
   console.log("db connected");
 });
 

@@ -40,6 +40,7 @@
 
 
 const express = require('express')
+ const fileupload = require("express-fileupload")
 const cors = require("cors")
 const bodyParser = require("body-parser")
 const MongoClient = require('mongodb').MongoClient;
@@ -48,13 +49,16 @@ const port = 5000
 
 app.use(cors())
 app.use(bodyParser.json())
+app.use(fileupload())
+app.use(express.static("services"))
+
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
 
-
+const uri = "mongodb+srv://fahimalif:fahimkhan@cluster0.vigvf.mongodb.net/creativeagency?retryWrites=true&w=majority";
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
@@ -104,6 +108,23 @@ app.get("/getallservice",(req,res) => {
   .toArray((err,documents) => {
     res.send(documents)
   })
+})
+
+app.post("/addservice",(req,res) => {
+
+    const file = req.files.file
+    const name = req.body.name
+    const des = req.body.des
+    console.log(file,name,des);
+    file.mv(`${__dirname}/services/${file.name}`,(err)=> {
+      // console.log(err);
+      if (err) {
+        console.log(err);
+        return res.status(500).send({msg:"failed to uploaad"})
+      }
+      return res.send({name: file.name,path:`/${file.name}`})
+    })
+    
 })
 
 

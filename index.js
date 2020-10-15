@@ -72,37 +72,27 @@ client.connect((err) => {
     const file = req.files.file;
     const name = req.body.name;
     const des = req.body.des;
-    const filePath = `${__dirname}/services/${file.name}`;
 
-    console.log(file, name, des);
-    file.mv(filePath, (err) => {
-      // console.log(err);
-      if (err) {
-        console.log(err);
-      }
-
-      const newimg = fs.readFileSync(filePath);
+   
+      const newimg = file.data;
 
       const encodedimg = newimg.toString("base64");
 
       var image = {
-        contentType: req.files.file.mimetype,
-        size: req.files.file.size,
-        img: Buffer(encodedimg, "base64"),
+        contentType: file.mimetype,
+        size: file.size,
+        img: Buffer.from(encodedimg, "base64"),
       };
 
       servicescollection.insertOne({ name, des, image }).then((r) => {
         console.log(r.insertedCount > 0);
-        fs.remove(filePath, (err) => {
-          if (err) {
-            console.log(err);
-            res.status(500).send({ msg: "failed to uploaad" });
-          }
+      
+      
           res.send(r.insertedCount > 0);
-        });
+   
       });
-      // return res.send({name: file.name,path:`/${file.name}`})
-    });
+   
+
   });
 //get all services
   app.get("/allservcies", (req, res) => {

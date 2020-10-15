@@ -101,7 +101,7 @@ client.connect((err) => {
     });
   });
 
-  app.post("/isdoctor", (req, res) => {
+  app.post("/isadmin", (req, res) => {
     const email = req.body.email;
     admincollection.find({ email: email }).toArray((err, documents) => {
       res.send(documents.length > 0);

@@ -1,35 +1,3 @@
-// const express = require("express")
-// const fileupload = require("express-fileupload")
-// const app = express()
-// const port = 5000
-
-// app.use(fileupload())
-
-// app.get("/",(req,res) => {
-//     res.send("hello")
-// })
-
-// app.post('/add',(req,res) => {
-//     if (req.files === null) {
-//         return res.status(400).json({msg:"no file"})
-//     }
-
-//     const file = req.files.file
-
-//     file.mv(`${__dirname}/${file.name}`,err => {
-//         if (err) {
-//             console.error(err);
-//             return res.status(500)
-//         }
-
-// res.json({fileName: file.name,filePath: `${file.name}`})
-
-//     })
-// })
-
-// app.listen(port,()=> {
-//     console.log("running");
-// })
 
 const express = require("express");
 const fileupload = require("express-fileupload");
@@ -48,7 +16,6 @@ app.use(express.static("services"));
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
-
 
 
 const client = new MongoClient(uri, {
